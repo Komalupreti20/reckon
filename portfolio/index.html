@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Komal | Developer Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;scroll-behavior:smooth;}
+    body{background:#0a0f1f;color:white;overflow-x:hidden;}
+    h2{text-align:center;font-size:2rem;margin-bottom:20px;color:#ff7b00;text-shadow:0 0 15px rgba(255,123,0,0.7);}
+    a{text-decoration:none;color:inherit;transition:.3s;}
+
+    header{position:fixed;top:0;left:0;width:100%;padding:15px 10%;
+      display:flex;justify-content:space-between;align-items:center;
+      background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);z-index:1000;}
+    .logo{font-size:1.5rem;font-weight:700;color:#ff7b00;text-shadow:0 0 10px #ff7b00;}
+    nav ul{display:flex;gap:20px;list-style:none;}
+    nav a{color:white;font-weight:500;}
+    nav a:hover{color:#ff7b00;text-shadow:0 0 8px #ff7b00;}
+
+    section{min-height:100vh;padding:60px 10% 60px;opacity:0;transform:translateY(30px);
+            transition:all 0.8s ease;}
+    section.show{opacity:1;transform:translateY(0);}
+
+    .hero{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+          background:url('https://images.unsplash.com/photo-1555066931-4365d14bab8c') center/cover no-repeat;position:relative;}
+    .hero::after{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);}
+    .hero-content{position:relative;z-index:1;}
+    .hero h1{font-size:3rem;margin-bottom:10px;text-shadow:0 0 15px #ff7b00;}
+    .hero h1 span{color:#ff7b00;}
+    .hero p{color:#ccc;margin-bottom:20px;text-shadow:0 0 5px #00eaff;font-size:1.2rem;min-height:30px;}
+    .hero-img{width:200px;height:200px;border-radius:50%;object-fit:cover;
+              box-shadow:0 0 25px rgba(255,123,0,0.7);margin:20px 0;border:3px solid #ff7b00;}
+    .btn{background:#ff7b00;color:white;padding:12px 25px;border-radius:6px;margin:5px;transition:.3s;display:inline-block;box-shadow:0 0 10px #ff7b00;}
+    .btn:hover{background:#e66900;box-shadow:0 0 20px #ff7b00;}
+
+    .about-card{max-width:1000px;margin:auto;display:flex;flex-wrap:wrap;gap:30px;align-items:center;justify-content:center;}
+    .about-card img{width:280px;height:280px;object-fit:cover;border-radius:12px;box-shadow:0 0 15px #ff7b00;}
+    .about-text{flex:1;background:rgba(255,255,255,0.08);backdrop-filter:blur(10px);padding:30px;border-radius:15px;color:#ccc;line-height:1.7;box-shadow:0 0 20px rgba(255,123,0,0.2);}
+    .about-links{margin-top:15px;}
+    .about-links a{margin-right:20px;font-weight:600;color:#ff7b00;text-shadow:0 0 8px #ff7b00;}
+    .about-links a i{margin-right:6px;}
+
+    .skills-container{display:flex;flex-wrap:wrap;gap:30px;justify-content:center;margin-top:20px;}
+    .skill-circle{width:110px;height:110px;border-radius:50%;position:relative;display:flex;justify-content:center;align-items:center;
+                  background:conic-gradient(#ff7b00 0deg, #ff7b00 var(--deg), #222 var(--deg));box-shadow:0 0 10px rgba(255,123,0,0.6);}
+    .skill-inner{width:75px;height:75px;background:#0a0f1f;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;}
+    .skill-inner img{width:28px;margin-bottom:4px;}
+    .skill-percent{font-weight:600;font-size:0.9rem;color:#ff7b00;}
+    .skill-name{margin-top:8px;text-align:center;font-size:0.9rem;color:#ccc;}
+
+    .bar-skill{width:100%;max-width:500px;margin:10px auto;color:white;}
+    .bar-skill label{font-weight:600;display:block;margin-bottom:6px;}
+    .bar{background:#333;width:100%;height:18px;border-radius:9px;overflow:hidden;position:relative;}
+    .bar-fill{height:100%;background:#ff7b00;width:0%;transition:1s;box-shadow:0 0 8px #ff7b00;}
+    .bar-skill label span{float:right;color:#ff7b00;font-weight:700;}
+
+   /* Projects */
+.projects{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:30px;}
+.project-card{width:260px;height:180px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;box-shadow:0 0 15px rgba(0,234,255,0.4);}
+.project-card img{width:100%;height:100%;object-fit:cover;transition:.5s;}
+.project-card:hover img{transform:scale(1.2);}
+.project-card .overlay{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.7);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  opacity:0;transition:.4s;padding:15px;
+}
+.project-card:hover .overlay{opacity:1;}
+.overlay h3{color:#ff7b00;margin-bottom:5px;text-shadow:0 0 8px #ff7b00;}
+.overlay p{font-size:0.8rem;color:#ddd;margin-bottom:10px;}
+.overlay a{display:inline-block;background:#ff7b00;color:white;
+  padding:6px 12px;border-radius:6px;text-decoration:none;transition:.3s;box-shadow:0 0 10px #ff7b00;}
+.overlay a:hover{background:#e66900;}
+
+    .contact-card{background:rgba(255,255,255,0.08);padding:30px;border-radius:20px;
+      max-width:400px;margin:auto;box-shadow:0 0 20px rgba(0,234,255,0.3);}
+    .contact-card input,.contact-card textarea{
+      width:100%;padding:10px;margin-bottom:10px;border:none;border-radius:6px;
+      background:rgba(255,255,255,0.1);color:white;
+    }
+    .contact-card button{width:100%;padding:12px;border:none;border-radius:6px;
+      background:#ff7b00;color:white;font-weight:600;cursor:pointer;box-shadow:0 0 10px #ff7b00;}
+    .contact-card button:hover{background:#e66900;box-shadow:0 0 20px #ff7b00;}
+
+    footer{text-align:center;padding:20px;color:#777;margin-top:40px;}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Portfolio</div>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section id="home" class="hero show">
+  <div class="hero-content">
+    <h1>Hello, I'm <span>Komal</span></h1>
+    <p id="typewriter"></p>
+    <img src="./komal_gadhe.jpg" alt="Komal" class="hero-img">
+    <div>
+      <a class="btn" href="komal CV.pdf" download>Download Resume</a>
+      <a class="btn" href="#contact">Hire Me</a>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <h2>About Me</h2>
+  <div class="about-card">
+    <img src="./komal_gadhe.jpg" alt="Profile">
+    <div class="about-text">
+      Hello! I am Komal, a dedicated software developer passionate about building dynamic, user‑friendly web applications using modern technologies like HTML, CSS, JavaScript, Java, Python, SQL, C, and C++. Pursuing MCA from MJP Rohilkhand University, I focus on clean design, intuitive UX, and responsive code. I’m always eager to learn and collaborate.
+      <div class="about-links">
+        <a href="mailto:komalupreti20@gmail.com"><i class="fas fa-envelope"></i>Email</a>
+        <a href="https://in.linkedin.com/in/komal-upreti-986b6026b" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <h2>Skills</h2>
+
+  <h3 style="text-align:center;margin-bottom:20px;color:#ccc;">Technical Skills</h3>
+  <div class="skills-container">
+    <div class="skill-circle" style="--deg:324deg"><div class="skill-inner"><img src="https://cdn-icons-png.flaticon.com/512/732/732212.png"><span class="skill-percent">90%</span></div><div class="skill-name">HTML</div></div>
+    <div class="skill-circle" style="--deg:306deg"><div class="skill-inner"><img src="https://cdn-icons-png.flaticon.com/512/732/732190.png"><span class="skill-percent">85%</span></div><div class="skill-name">CSS</div></div>
+    <div class="skill-circle" style="--deg:288deg"><div class="skill-inner"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png"><span class="skill-percent">80%</span></div><div class="skill-name">JavaScript</div></div>
+    <div class="skill-circle" style="--deg:270deg"><div class="skill-inner"><img src="https://cdn-icons-png.flaticon.com/512/226/226777.png"><span class="skill-percent">75%</span></div><div class="skill-name">Java</div></div>
+    <div class="skill-circle" style="--deg:252deg"><div class="skill-inner"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png"><span class="skill-percent">70%</span></div><div class="skill-name">Python</div></div>
+    <div class="skill-circle" style="--deg:234deg"><div class="skill-inner"><img src="https://cdn-icons-png.flaticon.com/512/4248/4248443.png"><span class="skill-percent">65%</span></div><div class="skill-name">SQL</div></div>
+    <div class="skill-circle" style="--deg:216deg"><div class="skill-inner"><img src="https://cdn-icons-png.flaticon.com/512/3665/3665923.png"><span class="skill-percent">60%</span></div><div class="skill-name">C</div></div>
+    <div class="skill-circle" style="--deg:198deg"><div class="skill-inner"><img src="https://cdn-icons-png.flaticon.com/512/6132/6132222.png"><span class="skill-percent">60%</span></div><div class="skill-name">C++</div></div>
+  </div>
+
+  <h3 style="text-align:center;margin-top:40px;margin-bottom:10px;color:#ccc;">Professional Skills</h3>
+  <div class="bar-skill">
+    <label>Communication <span>90%</span></label>
+    <div class="bar"><div class="bar-fill" style="width:90%"></div></div>
+  </div>
+  <div class="bar-skill">
+    <label>Problem Solving <span>85%</span></label>
+    <div class="bar"><div class="bar-fill" style="width:85%"></div></div>
+  </div>
+  <div class="bar-skill">
+    <label>Time Management <span>80%</span></label>
+    <div class="bar"><div class="bar-fill" style="width:80%"></div></div>
+  </div>
+  <div class="bar-skill">
+    <label>Teamwork <span>85%</span></label>
+    <div class="bar"><div class="bar-fill" style="width:85%"></div></div>
+  </div>
+  <div class="bar-skill">
+    <label>Leadership <span>80%</span></label>
+    <div class="bar"><div class="bar-fill" style="width:75%"></div></div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+  <h2>Projects</h2>
+  <div class="projects">
+    <div class="project-card">
+      <img src="./img-portfolio.png" alt="">
+      <div class="overlay"><h3>Portfolio Website</h3><p>Responsive personal portfolio.</p><a href="personal.html" target="_blank">Live Demo</a></div>
+    </div>
+    <div class="project-card">
+      <img src="./img-weather.jpg" alt="">
+      <div class="overlay"><h3>Weather App</h3><p>Shows live weather & forecast.</p><a href="weather.html" target="_blank">Live Demo</a></div>
+    </div>
+    <div class="project-card">
+      <img src="https://tse1.mm.bing.net/th/id/OIP.MC4niCFA3PvidV-puUk2GgHaEK?pid=Api&P=0&h=180" alt="">
+      <div class="overlay"><h3>Tic Tac Toe</h3><p>Fun JS Game Project.</p><a href="tic tac toe.html" target="_blank">Live Demo</a></div>
+    </div>
+  </div>
+</section>
+<!-- Contact -->
+<section id="contact">
+  <h2>Contact Me</h2>
+  <div class="contact-card">
+    <form id="contactForm">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Komal | All Rights Reserved</p>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.querySelectorAll('section').forEach(sec => {
+      if (sec.getBoundingClientRect().top < window.innerHeight - 100) {
+        sec.classList.add('show');
+      }
+    });
+  });
+
+  document.getElementById("contactForm")?.addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("Thank you! Your message has been sent.");
+    this.reset();
+  });
+
+  const typewriterElement = document.getElementById("typewriter");
+  const textArray = ["Aspiring Software Developer", "Web Designer", "Java Developer"];
+  let textIndex = 0, charIndex = 0, isDeleting = false;
+
+  function typeEffect() {
+    const currentText = textArray[textIndex];
+    if (!isDeleting) {
+      typewriterElement.textContent = currentText.slice(0, ++charIndex);
+      if (charIndex === currentText.length) {
+        isDeleting = true;
+        setTimeout(typeEffect, 1500);
+      } else {
+        setTimeout(typeEffect, 100);
+      }
+    } else {
+      typewriterElement.textContent = currentText.slice(0, --charIndex);
+      if (charIndex === 0) {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % textArray.length;
+      }
+      setTimeout(typeEffect, 50);
+    }
+  }
+  typeEffect();
+</script>
+
+</body>
+</html>
